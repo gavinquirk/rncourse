@@ -10,7 +10,8 @@ import {
 
 export default class App extends Component {
   state = {
-    placeName: ''
+    placeName: '',
+    places: []
   };
 
   placeNameChangedHandler = val => {
@@ -19,9 +20,26 @@ export default class App extends Component {
     });
   };
 
+  placeSubmitHandler = () => {
+    if (this.state.placeName.trim() === '') {
+      return;
+    }
+
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(prevState.placeName)
+      };
+    });
+  };
+
   render() {
+    const placesOutput = this.state.places.map((place, i) => (
+      <Text key={i}>{place}</Text>
+    ));
+
     return (
       <View style={styles.container}>
+        {/* INSIDE MAIN VIEW */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.placeInput}
@@ -29,8 +47,15 @@ export default class App extends Component {
             value={this.state.placeName}
             onChangeText={this.placeNameChangedHandler}
           />
-          <Button title='Add' style={styles.placeButton} />
+          <Button
+            title='Add'
+            style={styles.placeButton}
+            onPress={this.placeSubmitHandler}
+          />
         </View>
+        {placesOutput}
+        <View />
+        {/* END INSIDE MAIN VIEW */}
       </View>
     );
   }
