@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList';
+// import placeImage from './src/assets/ross.jpg';
 
 export default class App extends Component {
   state = {
@@ -14,7 +15,11 @@ export default class App extends Component {
       return {
         places: prevState.places.concat({
           key: Math.random(),
-          value: placeName
+          name: placeName,
+          image: {
+            uri:
+              'https://yt3.ggpht.com/a/AGF-l7_IPKJORqk1Wo7AR4jMhW15Ma-za_QDlRxMcQ=s900-mo-c-c0xffffffff-rj-k-no'
+          }
         })
       };
     });
