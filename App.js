@@ -6,10 +6,7 @@ import PlaceList from './src/components/PlaceList/PlaceList';
 import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
 
 export default class App extends Component {
-  state = {
-    places: [],
-    selectedPlace: null
-  };
+  state = {};
 
   placeAddedHandler = placeName => {
     this.setState(prevState => {
