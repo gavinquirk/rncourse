@@ -3,7 +3,7 @@ import {
   DELETE_PLACE,
   SELECT_PLACE,
   DESELECT_PLACE
-} from '../actions/actionTypes';
+} from "../actions/actionTypes";
 
 const initialState = {
   places: [],
@@ -12,7 +12,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // ADD PLACE
     case ADD_PLACE:
       return {
         ...state,
@@ -21,11 +20,10 @@ const reducer = (state = initialState, action) => {
           name: action.placeName,
           image: {
             uri:
-              'https://yt3.ggpht.com/a/AGF-l7_IPKJORqk1Wo7AR4jMhW15Ma-za_QDlRxMcQ=s900-mo-c-c0xffffffff-rj-k-no'
+              "https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg"
           }
         })
       };
-    // DELETE PLACE
     case DELETE_PLACE:
       return {
         ...state,
@@ -34,7 +32,6 @@ const reducer = (state = initialState, action) => {
         }),
         selectedPlace: null
       };
-    // SELECT PLACE
     case SELECT_PLACE:
       return {
         ...state,
@@ -42,7 +39,6 @@ const reducer = (state = initialState, action) => {
           return place.key === action.placeKey;
         })
       };
-    // DESELECT PLACE
     case DESELECT_PLACE:
       return {
         ...state,
