@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  ImageBackground,
+  Dimensions
+} from 'react-native';
+import { connect } from 'react-redux';
 
 import startMainTabs from '../MainTabs/startMainTabs';
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
@@ -8,7 +17,6 @@ import MainText from '../../components/UI/MainText/MainText';
 import ButtonWithBackground from '../../components/UI/ButtonWithBackground/ButtonWithBackground';
 import backgroundImage from '../../assets/background.jpg';
 import validate from '../../utility/validation';
-import { connect } from 'react-redux';
 import { tryAuth } from '../../store/actions/index';
 
 class AuthScreen extends Component {
@@ -45,12 +53,10 @@ class AuthScreen extends Component {
 
   constructor(props) {
     super(props);
-    // Add dimensions event listener
     Dimensions.addEventListener('change', this.updateStyles);
   }
 
   componentWillUnmount() {
-    // Remove dimensions event listener
     Dimensions.removeEventListener('change', this.updateStyles);
   }
 
@@ -68,7 +74,6 @@ class AuthScreen extends Component {
     });
   };
 
-  // Start tab based nav on login
   loginHandler = () => {
     const authData = {
       email: this.state.controls.email.value,
@@ -80,7 +85,6 @@ class AuthScreen extends Component {
 
   updateInputState = (key, value) => {
     let connectedValue = {};
-
     if (this.state.controls[key].validationRules.equalTo) {
       const equalControl = this.state.controls[key].validationRules.equalTo;
       const equalValue = this.state.controls[equalControl].value;
@@ -89,14 +93,12 @@ class AuthScreen extends Component {
         equalTo: equalValue
       };
     }
-
     if (key === 'password') {
       connectedValue = {
         ...connectedValue,
         equalTo: value
       };
     }
-
     this.setState(prevState => {
       return {
         controls: {
@@ -129,17 +131,15 @@ class AuthScreen extends Component {
 
   render() {
     let headingText = null;
-
     let confirmPasswordControl = null;
 
     if (this.state.viewMode === 'portrait') {
-      let headingText = (
+      headingText = (
         <MainText>
           <HeadingText>Please Log In</HeadingText>
         </MainText>
       );
     }
-
     if (this.state.authMode === 'signup') {
       confirmPasswordControl = (
         <View
@@ -160,7 +160,6 @@ class AuthScreen extends Component {
         </View>
       );
     }
-
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
@@ -173,7 +172,7 @@ class AuthScreen extends Component {
           </ButtonWithBackground>
           <View style={styles.inputContainer}>
             <DefaultInput
-              placeholder='Your E-mail Address'
+              placeholder='Your E-Mail Address'
               style={styles.input}
               value={this.state.controls.email.value}
               onChangeText={val => this.updateInputState('email', val)}
@@ -205,17 +204,16 @@ class AuthScreen extends Component {
                   touched={this.state.controls.password.touched}
                 />
               </View>
+              {confirmPasswordControl}
             </View>
-            {confirmPasswordControl}
           </View>
           <ButtonWithBackground
             color='#29aaf4'
             onPress={this.loginHandler}
             disabled={
-              (!this.state.controls.email.valid &&
-                this.state.authMode === 'signup') ||
-              !this.state.controls.password.valid ||
-              !this.state.controls.confirmPassword.valid
+              !this.state.controls.confirmPassword.valid ||
+              !this.state.controls.email.valid ||
+              !this.state.controls.password.valid
             }
           >
             Submit
